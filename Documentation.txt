@@ -1,0 +1,24 @@
+Lab 1 - A Thesaurus Client & Server(Multithreaded)
+
+Language: Python 3.6
+Liabrary: PyQT5
+
+Server Files: ServerMain.py, ServerGUI.py
+Client File: ClientGUI.py
+Dictionary file: my-thesaurus.txt
+
+How to run the Programs from Command Prompt-
+
+1. Running Server
+	a. Open the Command Prompt.
+	b. Go to the Project directory using cd command.
+	c. Type- "python ServerMain.py" and press enter. GUI will open.
+	d. Click "Start" button to start the service.
+
+2. Running Client
+	a. Open a new Command Prompt Window.
+	b. Go to the Project directory using cd command.
+	c. Type- "python ClientGUI.py" and press enter. GUI will open.
+	d. Now enetr word in search to get Synonyms.
+
+	To run multiple clients follow Step 2.
