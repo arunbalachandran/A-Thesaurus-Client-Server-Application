@@ -1,10 +1,10 @@
-'''
+"""
 Multithreaded TCP Server - Nishant Thakur
 University of Texas at Arlington - UID: 1001544591
 Studied socket programming from YouTube. Sendex tutorial for socket programming.
 Studied PyQt GUI development from YouTube. Sendex tutorial for PyQt GUI development.
 Studied Thread in Qt from the official PyQt documentation.
-'''
+"""
 
 from queue import Queue
 from PyQt5 import QtWidgets
@@ -14,11 +14,14 @@ from PyQt5.QtGui import QTextCursor
 import ServerGUI
 import sys, os
 
-'''
+"""
 This is the main class from where the GUI starts.
 When the object of the main class is initiated the GUI is rendered in the memory.
 Thread to handel multiple connection are initiated in this class.
-'''
+
+"""
+
+
 class MainUiClass(QtWidgets.QMainWindow, ServerGUI.Ui_Dialog):
     def __init__(self, parent=None):
         super(MainUiClass, self).__init__(parent)
@@ -38,16 +41,18 @@ class MainUiClass(QtWidgets.QMainWindow, ServerGUI.Ui_Dialog):
 
     # appending the logs to the QTextBrowser with the following function.
     @pyqtSlot(str)
-    def append_text(self,text):
+    def append_text(self, text):
         self.logs.moveCursor(QTextCursor.End)
         self.logs.insertPlainText(text)
 
+
 #######################################################################################
-#this classes are use to redirect all the sys.stdout to the PyQt QTextBrowser Widget
-#from StackOverFlow : https://stackoverflow.com/questions/21071448/redirecting-stdout-and-stderr-to-a-pyqt4-qtextedit-from-a-secondary-thread
+# this classes are use to redirect all the sys.stdout to the PyQt QTextBrowser Widget
+# from StackOverFlow : https://stackoverflow.com/questions/21071448/redirecting-stdout-and-stderr-to-a-pyqt4-qtextedit-from-a-secondary-thread
 class WriteStream(object):
-    def __init__(self,queue):
+    def __init__(self, queue):
         self.queue = queue
+
     def write(self, text):
         self.queue.put(text)
 
@@ -55,8 +60,8 @@ class WriteStream(object):
 class MessageBox(QObject):
     cmd_signal = pyqtSignal(str)
 
-    def __init__(self,queue,*args,**kwargs):
-        QObject.__init__(self,*args,**kwargs)
+    def __init__(self, queue, *args, **kwargs):
+        QObject.__init__(self, *args, **kwargs)
         self.queue = queue
 
     @pyqtSlot()
@@ -64,9 +69,11 @@ class MessageBox(QObject):
         while True:
             text = self.queue.get()
             self.cmd_signal.emit(text)
+
+
 #######################################################################################
 
-#Thread for each client is in the following class
+# Thread for each client is in the following class
 class ClientThread(QObject):
     def __init__(self, conn, *args, **kwargs):
         QObject.__init__(self, *args, **kwargs)
@@ -91,7 +98,8 @@ class ClientThread(QObject):
             self.conn.sendall(str.encode(reply))
         self.conn.close()
 
-#thread for accepting the clients continiously is in the following class
+
+# thread for accepting the clients continiously is in the following class
 class AcceptConnections(QObject):
     @pyqtSlot()
     def run(self):
@@ -104,7 +112,8 @@ class AcceptConnections(QObject):
             self.thread.started.connect(self.my_receiver.run)
             self.thread.start()
 
-#initiatization of the program starts here
+
+# initialization of the program starts here
 if __name__ == '__main__':
 
     import socket
@@ -115,16 +124,16 @@ if __name__ == '__main__':
     port = 8888
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print(s)
-    #bind the socket to the specified host and port.
+    # bind the socket to the specified host and port.
     try:
         s.bind((host, port))
     except socket.error as e:
         print(str(e))
 
-    #number of valid connection allowed at a given time
+    # number of valid connection allowed at a given time
     s.listen(5)
 
-    #save the dictionary file in a variable
+    # save the dictionary file in a variable
     with open('my-thesaurus.txt') as f:
         lines = f.readlines()
     dictionary = ast.literal_eval(lines[0])

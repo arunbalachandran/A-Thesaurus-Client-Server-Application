@@ -1,14 +1,15 @@
-'''
+"""
 TCP Client - Nishant Thakur
 University of Texas at Arlington - UID: 1001544591
 Studied socket programming from YouTube. Sendex tutorial for socket programming.
 Studied PyQt GUI development from YouTube. Sendex tutorial for PyQt GUI development.
-'''
+"""
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-#class where the GUI is designed and program logic is initiated.
+
+# class where the GUI is designed and program logic is initiated.
 class Ui_ClientDialog(object):
-    #function to make GUI
+    # function to make GUI
     def setupUi(self, ClientDialog):
         ClientDialog.setObjectName("ClientDialog")
         ClientDialog.resize(380, 212)
@@ -48,7 +49,7 @@ class Ui_ClientDialog(object):
         self.retranslateUi(ClientDialog)
         QtCore.QMetaObject.connectSlotsByName(ClientDialog)
 
-    #changing names of the labels and objects in GUI with this function
+    # changing names of the labels and objects in GUI with this function
     def retranslateUi(self, ClientDialog):
         _translate = QtCore.QCoreApplication.translate
         ClientDialog.setWindowTitle(_translate("ClientDialog", "ClientGUI"))
@@ -59,12 +60,12 @@ class Ui_ClientDialog(object):
         self.exit.setText(_translate("ClientDialog", "Exit"))
         self.cleartxt.setText(_translate("ClientDialog", "Clear"))
 
-    #logic for clearing the search box and Synonyms box
+    # logic for clearing the search box and Synonyms box
     def clearTXT(self):
         self.userWord.setText("")
         self.wordSynonyms.setText("")
 
-    #function to request the synonyms of word from the Server
+    # function to request the synonyms of word from the Server
     def requestWord(self):
         # print("hello word search clicked!!")
         word = self.userWord.text()
@@ -77,11 +78,12 @@ class Ui_ClientDialog(object):
             print(tm.decode("utf-8"))
             self.wordSynonyms.setText(tm.decode("utf-8"))
 
-    #function to append the response of the server to the Synonyms text box
+    # function to append the response of the server to the Synonyms text box
     def append_text(self, text):
         self.logs.append(text)
 
-#program execution starts here
+
+# program execution starts here
 if __name__ == "__main__":
     import sys
     import socket

@@ -1,7 +1,7 @@
-'''
+"""
 GUI file generated using Qt Designer.
 Some buttons were added by me manually.
-'''
+"""
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Dialog(object):
